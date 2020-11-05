@@ -6,5 +6,6 @@ from .views import *
 
 urlpatterns = [
     path('welcome/?p<str:key>', home_pages.as_view(), name='home'),
+    path('', home, name='enter'),
 
     ]

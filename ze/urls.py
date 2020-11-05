@@ -24,5 +24,5 @@ urlpatterns = [
     path('users/', include('my_users.urls')),
     path('patients/', include('patient.urls')),
     path('rv/', include('rv.urls')),
-    path('home/', include('home.urls')),
+    path('', include('home.urls')),
 ]

@@ -14,7 +14,8 @@ from ze.decorators import *
 
 # Create your views here.
 
-
+def home(request):
+    return render(request, "home.html", {})
 
 
 class home_pages(View):
