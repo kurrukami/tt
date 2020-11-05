@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Dentist!</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
+
+</head>
+
+<body>
+  <nav class="navbar is-dark">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://versions.bulma.io/0.7.0">
+        <img src="ze/templates/images/27000000-ed91-4246-9fa8-b8c83431faaf_200x200.png" alt="" width="112" height="28">
+      </a>
+      <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div id="navbarExampleTransparentExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="{% url 'home' 'home' %}">
+          HOME
+        </a>
+
+        {% if request.user.is_authenticated %}
+        <a class="navbar-item" href="{% url 'all_patients' %}">
+          PATIENTS
+        </a>
+
+        <a class="navbar-item" href="{% url 'all_rv'  %}">
+          APPOINTMENTS
+        </a>
+        {% endif %}
+        <a class="navbar-item" href="{% url 'rv_view' 'tt' %}">
+          MAKE APPOINTMENT
+        </a>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="{% url 'home' 'not complated' %}">
+            Docs
+          </a>
+          <div class="navbar-dropdown is-boxed">
+            <a class="navbar-item" href="{% url 'home' 'not complated' %}">
+              not complated yet
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            {% if request.user.is_authenticated %}
+            <p class="control">
+              <a class="bd-tw-button button is-white" href="
+              {% if request.user.is_superuser %}
+              {% url 'admin_view' 'doctors_infos' %}
+              {% else %}
+              {% url 'view' %}
+              {% endif %}
+              ">
+
+
+                <span>
+                  {{request.user.username}}
+                </span>
+              </a>
+            </p>
+            <p class="control">
+              <a class="bd-tw-button button is-black" href="{% url 'logout' %}">
+
+                <span>
+                  log out
+                </span>
+              </a>
+            </p>
+            {%else%}
+            <p class="control">
+              <a class="bd-tw-button button is-white" href="{% url 'login' %}">
+                <span>
+                  login
+                </span>
+              </a>
+            </p>
+            <p class="control">
+              <a class="button is-black" href="{% url 'send_infos' %}">
+                <span>get started</span>
+              </a>
+            </p>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <section class="hero is-white is-bold has-text-black">
+    <div class="columns p-4">
+      <div class="column is-7">
+        {% block 'page_title' %}
+        <div class="container">
+          <h1 class="title">heyy everyone</h1>
+          <p class="subtitle">this is d futur home page after maintaining</p>
+        </div>
+        {% endblock %}
+      </div>
+      <div class="column ">
+        {% block 'messages' %}
+        {% if messages %}
+        {% for msg in messages %}
+        <article class="message is-danger">
+          <div class="message-body">
+            <strong>{{msg|safe}}</strong>
+
+          </div>
+        </article>
+
+        {% endfor %}
+        {% endif %}
+        {% endblock %}
+      </div>
+    </div>
+  </section>
+
+
+<section class="hero is-medium is-dark is-bold">
+  <div class="container p-5">
+    {% block 'content' %}
+    fchgchgc
+    {% endblock %}
+
+  </div>
+</section>
+
+
+
+  <footer class="footer is-large has-background-dark has-text-light">
+    <div class="content hero-body has-text-centered">
+      <p>
+        <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+      </p>
+    </div>
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+
+{% block 'page_title' %}
+<div class="container">
+  <h1 class="title">welcome to home page</h1>
+  <p class="subtitle">this is d futur home page after maintaining</p>
+</div>
+{% endblock %}
+
+
+
+{% block 'content' %}
+<div class="hero-body">
+  <h1 class="title">welcome</h1>
+  <p class="subtitle">here u can join our large caummunaty
+    as a doctor or if you are <br> a patient you can make an
+    appointment <br>with one of our best doctors </p>
+<br>
+<div class="field p-3">
+    <a class="button is-white" type="" href=" {% url 'send_infos'  %} ">join us as a doctor</a>
+    <a class="button is-black" type="" href="{% url 'rv_view' 'key' %} ">make appointment with your doctor</a>
+</div>
+</div>
+{% endblock %}

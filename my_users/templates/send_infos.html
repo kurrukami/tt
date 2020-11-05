@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block 'page_title' %}
+<div class="container">
+  <h1 class="title">pre-register</h1>
+  <p class="subtitle">u can send us ur infos here</p>
+</div>
+{% endblock %}
+
+
+{% block 'content' %}
+
+
+<div class="columns">
+  <div class="column is-5 has-text-centred p-3">
+    <div class="">
+      <h1 class="title">We are glade you are this further</h1>
+      <p class="subtitle">please enter your correct informations <br> and our team will confirme your registration
+       then we will contact you soon
+      </p>
+          </div>
+
+  </div>
+  <div class="column">
+    <div class="column  is-offset-2">
+      <form class="" action="" method="POST">
+        {% csrf_token %}
+        <div class="field is-grouped is-fullwidth">
+          <div class="field">
+            <label class="label has-text-white">name</label>
+            <div class="control">
+              {{form.username}}
+            </div>
+          </div>
+          <div class="field">
+            <label class="label has-text-white">email</label>
+            <div class="control">
+              {{form.email}}
+            </div>
+          </div>
+
+        </div>
+        <div class="field">
+          <label class="label has-text-white">phone</label>
+          <div class="control">
+            {{form.phone_num}}
+          </div>
+        </div>
+        <button type="submit" class="button is-black">submite</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

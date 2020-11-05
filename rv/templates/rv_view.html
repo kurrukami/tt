@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block 'page_title' %}
+<div class="container">
+  <h1 class="title">Welcome to RV page</h1>
+  <p class="subtitle">you can choose here the type of an oppointment</p>
+</div>
+{% endblock %}
+
+
+{% block 'content' %}
+
+    <div class="container p-6">
+      <h1 class="title">RV</h1>
+      <p class="subtitle">choose between the 2 appointment type</p>
+      <div class="field is-grouped is-6">
+        <div class="field p-3">
+            <a class="button is-white" type="" href=" {% url 'rv_view' 'tommorw_ap' %} ">appointment for tommorw</a>
+            <a class="button is-black" type="" href="{% url 'rv_view' 'date_ap' %} ">appointment with your date</a>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}

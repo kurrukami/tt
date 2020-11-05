@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+{% block 'page_title' %}
+<div class="container">
+  <h1 class="title">RV page</h1>
+  <p class="subtitle">here is all appointment for today!</p>
+</div>
+{% endblock %}
+
+
+{% block 'content' %}
+
+
+<div class="p-6">
+  <table class="table is-fullwidth  is-hoverable has-background-grey-light">
+    <thead>
+      <tr>
+        <th>name</th>
+        <th>phone</th>
+        <th>comment</th>
+        <th>date</th>
+        <th>delete</th>
+
+      </tr>
+    </thead>
+    {% for rv in rvs %}
+    <tr>
+      <td>{{rv.name}}</td>
+      <td>{{rv.phone_num}}</td>
+      <td>{{rv.cmnt}}</td>
+      <td>{{rv.date_forma}}</td>
+      <td>
+        <a href="{% url 'delete_patient_fake' rv.pk %}" class="button is-black is-small">delete</a>
+      </td>
+    </tr>
+
+    {% endfor%}
+
+
+  </table>
+</div>
+
+
+{% endblock %}

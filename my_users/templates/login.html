@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block 'page_title' %}
+<div class="container">
+  <h1 class="title">login page</h1>
+  <p class="subtitle">u can log in and experience our great site</p>
+</div>
+{% endblock %}
+
+{% block 'content' %}
+
+
+    <div class="columns">
+      <div class="column is-4 is-offset-4">
+        <form class="" action="" method="POST">
+          {% csrf_token %}
+          <div class="field">
+            <label class="label has-text-white">Name</label>
+            <div class="control">
+              {{form.username}}
+            </div>
+          </div>
+          <div class="field">
+            <label class="label has-text-white">phone</label>
+            <div class="control">
+              {{form.password}}
+            </div>
+          </div>
+
+          <button class="button is-black" type="submit" name="button">submite</button>
+        </form>
+      </div>
+
+    </div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends  'base.html' %}
+
+
+{% block 'page_title' %}
+<div class="container">
+  <div class="container">
+    <h1 class="title"><strong>admin</strong> page</h1>
+    <p class="subtitle">welcome to admin page </p>
+  </div>
+</div>
+{% endblock %}
+
+
+
+{% block 'content' %}
+<div class="p-6">
+
+  <div class="field p-3">
+    <a class="button is-white" type="" href=" {% url 'admin_view' 'doctors'  %} ">
+      YOUR DOCTORS
+    </a>
+  </div>
+
+  <table class="table is-fullwidth  is-hoverable has-background-grey-light">
+    <thead>
+      <tr>
+        <th>username</th>
+        <th>phone</th>
+        <th>email</th>
+        <th>comfirmation</th>
+        <th>delete</th>
+
+      </tr>
+    </thead>
+    {% for x in smtg%}
+    <tr>
+      <td>{{x.username}}</td>
+      <td>{{x.phone_num}}</td>
+      <td>{{x.email}}</td>
+      <td>
+        <a href="{% url 'get_adminn_pk' x.pk %}" class="button is-black">send him email</a>
+      </td>
+
+
+      <td>
+        <a href="" class="button is-black is-small">delete</a>
+      </td>
+    </tr>
+
+    {% endfor%}
+
+
+  </table>
+</div>{% endblock %}

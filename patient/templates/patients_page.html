@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+
+{% block 'page_title' %}
+<div class="container">
+  <h1 class="title"><strong>Patients Page</strong></h1>
+  <p class="subtitle">you can manage and update your patients here </p>
+</div>
+
+{% endblock %}
+
+
+{% block 'content' %}
+
+  <div class="container p-3">
+    <h1 class="title">add a new patiens </h1>
+    <a class=" subtitle button is-danger" href="{% url 'add_new_patient' %}" style="display:inline">
+      new patient
+    </a>
+  </div>
+  <div class="columns p-3">
+    <div class="column is-4 is-offset-7">
+      <form class="" action="{% url 'search_by_name' %}" method="get">
+        {% csrf_token %}
+        <div class="field has-addons">
+          <div class="control">
+            <input class="input"  name="search_by_name" type="text" placeholder="Find a repository">
+          </div>
+          <div class="control">
+            <button type="submit" class="button is-black">
+              Search
+            </button>
+          </div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+
+
+
+  </div>
+  <div class="columns p-5">
+    <div class="hero">
+      <table class="table is-fullwidth  is-hoverable has-background-grey-light">
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>phone</th>
+            <th>CIN</th>
+            <th>genre visite</th>
+            <th>montant a payer</th>
+            <th>montant paye</th>
+            <th>montant reste</th>
+            <th>date debut</th>
+            <th>date fin</th>
+            <th>commentaire</th>
+            <th>update</th>
+            <th>delete</th>
+
+          </tr>
+        </thead>
+
+
+        {% for patient in patients %}
+        {% if not patient.is_deleted %}
+        <tr>
+          <td>{{patient.name}}</td>
+          <td>{{patient.phone_num}}</td>
+          <td>{{patient.cin}}</td>
+          <td>{{patient.genre_visite}}</td>
+          <td>{{patient.montant_a_payer}}</td>
+          <td>{{patient.montant_paye}}</td>
+          <td>{{patient.montant_reste}}</td>
+          <td>{{patient.date_debut}}</td>
+          <td>{{patient.get_date_fin}}</td>
+          <td>{{patient.commentaire}} </td>
+          <td>
+            <a href="{% url 'update_patient' patient.pk %}" class="button is-dark is-small">update</a>
+          </td>
+          <td>
+            <a href="{% url 'delete_patient_fake' patient.pk %}" class="button is-black is-small">delete</a>
+          </td>
+        </tr>
+        <!--
+        -->
+        {% endif %}
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+
+<!--
+<section class="hero is-medium is-dark is-bold">
+  <div class="hero-body">
+
+  </div>
+
+</section>
+-->
+{% endblock %}

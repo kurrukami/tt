@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block 'page_title' %}
+<div class="container">
+  <div class="container">
+    <h1 class="title"><strong>admin</strong> page</h1>
+    <p class="subtitle">welcome to admin page </p>
+  </div>
+</div>
+{% endblock %}
+
+
+
+{% block 'content' %}
+
+      <div class="columns">
+
+        <div class="column">
+          <div class="">
+            <h1 class="title">requests !!</h1>
+            <p class="subtitle">there is the requests of people who want to join our website</p>
+          </div>
+          <br>
+          <div class="">
+            <table class="table is-fullwidth is-striped is-hoverable ">
+              <thead>
+                <tr>
+                  <th>username</th>
+                  <th>email</th>
+                  <th>phone number</th>
+                  <th>created</th>
+                  <th>last login</th>
+
+                </tr>
+              </thead>
+              {% for doctor in smtg %}
+              <tr>
+                <td>{{doctor.username}}</td>
+                <td>{{doctor.email}}</td>
+                <td>{{doctor.phone_num}}</td>
+                <td>{{doctor.get_created_time}}</td>
+                <td>{{doctor.get_last_login}}</td>
+                <td>
+                  <a href="{% url 'get_adminn_pk' doctor.pk %}" class="button is-black">send him email</a>
+                </td>
+
+              </tr>
+              {% endfor %}
+
+            </table>
+          </div>
+
+          <div class="container">
+            <p>{{requests}}</p>
+          </div>
+        </div>
+
+      </div>
+
+  {% endblock %}

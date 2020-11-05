@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+
+{% block 'page_title' %}
+
+  <div class="container">
+    <h1 class="title"><strong>New Patient</strong></h1>
+    <p class="subtitle">add new patient here!! </p>
+  </div>
+
+{% endblock %}
+
+
+{% block 'content' %}
+<div class="columns">
+  <div class="column is-3 has-text-centred p-3">
+    <div class="container">
+      <h1 class="title">Add a New patient Here! .</h1>
+      <p class="subtitle">please enter a correct informations <br> and follow the  blow instructions </p>
+      -enter a correct name and phone number .<br>
+      -the CIN identifier  must be unique for each patient .<br>
+      - the type of visite and the comment must be somthing <br>readable and understandable .<br>
+      -the payed number(montant paye) must be inferier <br>to the cost number(montant a paye).
+    </div>
+
+  </div>
+  <div class="column">
+
+      <form class="" action="" method="post">
+        {% csrf_token %}
+        <div class="column is-offset-2">
+          <div class="columns">
+            <div class="column ">
+              <div class="grp">
+                <div class="field">
+                  <label class="label has-text-white">Name</label>
+                  <div class="control">
+                    {{form.name}}
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label has-text-white">phone</label>
+                  <div class="control">
+                    {{form.phone_num}}
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label has-text-white">CIN</label>
+                  <div class="control">
+                    {{form.cin}}
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label has-text-white">genre visite</label>
+                  <div class="control">
+                    {{form.genre_visite}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column ">
+              <div class="field">
+                <label class="label has-text-white">montant a payer</label>
+                <div class="control">
+                  {{form.montant_a_payer}}
+                </div>
+              </div>
+              <div class="field">
+                <label class="label has-text-white">montant paye</label>
+                <div class="control">
+                  {{form.montant_paye}}
+                </div>
+              </div>
+              <div class="field">
+                <label class="label has-text-white">commentaire</label>
+                <div class="control">
+                  {{form.commentaire}}
+                </div>
+              </div>
+
+
+              <div class="field is-grouped">
+                <div class="control">
+                  <button type="submit" class="button is-black">submite</button>
+                </div>
+                <div class="control">
+                  <a href="{% url 'all_patients' %}" class="button is-black is-light">Cancel</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </form>
+
+  </div>
+</div>
+{% endblock %}
