@@ -6,9 +6,9 @@ urlpatterns = [
     path('login/', login_view.as_view(), name='login'),
     path('logout/', log_out, name='logout'),
 
-
-    path('admin_view/?p<str:key>', admin_view.as_view(), name='admin_view'),
-    path('get_adminn_pk/?p<pk>[0-9]+', get_adminn_pk, name='get_adminn_pk'),
+    path('superuser_page/', superuser_page, name='superuser_page'),
+    path('admin_view/?p<str:key>/', admin_view.as_view(), name='admin_view'),
+    path('get_adminn_pk/?p<int:pk>[0-9]+/', get_adminn_pk, name='get_adminn_pk'),
 
 
     path('view/', view.as_view(), name='view'),

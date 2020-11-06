@@ -4,6 +4,7 @@ from .forms import *
 from .models import *
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from ze import settings
 
 from ze.shit import *
 from ze.decorators import *
@@ -42,12 +43,17 @@ def get_adminn_pk(request, pk):
             from_me_to_me(pswd='password generated ...')
             msg = op.generate_msg()
             from_me_to_me(msg='msg generated ...')
-            doc = op.create_doctor()
-            from_me_to_me(doctor='doctor created ...')
-            op.send_him_mail()
-            msg = 'send_email_process complited'
-            from_me_to_me(msg=msg)
-            messages.success(request, msg)
+            if op.send_him_mail() is not None:
+                msg = 'send_email_process complited'
+                doc = op.create_doctor()
+                from_me_to_me(doctor='doctor created ...')
+                from_me_to_me(msg=msg)
+                messages.success(request, msg)
+            else:
+                msg = 'try again'
+                from_me_to_me(msg=msg)
+                messages.success(request, msg)
+
 
         except:
             msg = 'send email process failed'
@@ -64,7 +70,7 @@ def get_adminn_pk(request, pk):
         from_me_to_me(op=op)
     except :
          from_me_to_me(op='op deleted')
-    return redirect('admin_view')
+    return redirect('admin_view', 'doctors_infos')
 
 
 from django.core.mail import send_mail
@@ -75,23 +81,28 @@ class send_email:
 
     def __init__(self, pk):
 
-        self.info = adminn_infos.objects.get(pk=pk)
+        try:
+            self.info = adminn_infos.objects.get(pk=pk)
+        except adminn_infos.DoesNotExist:
+            msg = 'pk not found'
+            messages.success(request, msg)
+            return redirect("view")
+
         self.username = self.info.username
-        self.send_email = self.info.email
+        self.to_email = self.info.email
         self.phone_num = self.info.phone_num
         self.msg = ''
         self.password = ''
 
     def check_doctor(self):
         try:
-            doc = doctor.objects.get(email=self.send_email)
+            doc = doctor.objects.get(email=self.to_email)
             return False
         except doctor.DoesNotExist:
             return True
 
 
-
-    from_email = 'zahry.akram@gmail.com'
+    from_email = settings.EMAIL_HOST_USER
     subject = 'your password'
 
 
@@ -111,7 +122,7 @@ class send_email:
 
     def create_doctor(self):
         user = doctor.objects.create(username=self.username,
-                                         email=self.send_email,
+                                         email=self.to_email,
                                          phone_num=self.phone_num)
         user.set_password(self.password)
         user.save()
@@ -122,34 +133,44 @@ class send_email:
 
     def send_him_mail(self):
         try:
-            send_mail(self.subject, self.msg, self.from_email, [self.send_email], fail_silently=False)
+            send_mail(self.subject,
+            self.msg,
+            self.from_email,
+            [self.to_email],
+            fail_silently=False)
             msg = 'email has sent'
             from_me_to_me(msg=msg)
+            from_me_to_me(msg=self.to_email)
             return 11
         except:
-            return 'error'
+            msg = 'email is None'
+            from_me_to_me(msg=msg)
+            return None
 
-
+@only_superusers
+def superuser_page(request):
+    template_name = 'superuser_page.html'
+    return render(request, template_name, {})
 
 
 class admin_view(View):
 
-    doctors = doctor.objects.all()
-    doctors_infos = adminn_infos.objects.all()
-    smtg = {
-    "doctors": ("doctors.html", doctors),
-    "doctors_infos": ("doctors_infos.html", doctors_infos)
-    }
     @method_decorator(decorators)
     def get(self, request, key):
-        if key in self.smtg.keys():
-            if len(self.doctors) == 0:
+        doctors = doctor.objects.all()
+        doctors_infos = adminn_infos.objects.all()
+        smtg = {
+        "doctors": ("doctors.html", doctors),
+        "doctors_infos": ("doctors_infos.html", doctors_infos)
+        }
+        if key in smtg.keys():
+            if len(doctors) == 0:
                 msg = 'no one want to join us yet :))'
                 messages.success(request, msg)
-            if len(self.doctors_infos) == 0:
+            if len(doctors_infos) == 0:
                 msg = 'u dt have any doctors yet :))'
                 messages.success(request, msg)
-            return render(request, self.smtg[key][0], {'smtg': self.smtg[key][1]})
+            return render(request, smtg[key][0], {'smtg': smtg[key][1]})
 
 
 class login_view(View):
@@ -168,31 +189,31 @@ class login_view(View):
             #from_me_to_me(cd=cd)
             username = cd["username"]
             password = cd["password"]
-
-            #user = adminn.objects.get(email=email)
-            #from_me_to_me(user = user)
-            #u = doctor.objects.get(username=username)
-
-            #from_me_to_me(u=u)
             user = authenticate(request, username=username, password=password)
             from_me_to_me(user=user, ur=request.user)
             if user is not None and user.is_active:
                 login(request, user)
                 from_me_to_me(user=user, ur=request.user)
                 if user.is_superuser:
-                    admin = admin_view()
-                    return admin.get(request, 'doctors_infos')
+                    #admin = admin_view()
+                    msg = f'supperuser {user.username}, glad to see u again'
+                    from_me_to_me(msg=msg)
+                    messages.success(request, msg)
+                    return redirect("admin_view", 'doctors_infos')
 
-                msg = f'welcom {user.username}'
+                msg = f'welcom {user.username}, glad to see u again'
                 from_me_to_me(msg=msg)
+                messages.success(request, msg)
                 return redirect("view")
             else:
-                msg = 'user not found'
+                msg = 'user not found, im calling FBA'
                 from_me_to_me(msg=msg)
+                messages.success(request, msg)
                 return redirect("login")
         else:
-            msg = 'form not valid'
+            msg = 'smtg went wrong plz try again'
             from_me_to_me(msg=msg)
+            messages.success(request, msg)
             return redirect("login")
 
 
