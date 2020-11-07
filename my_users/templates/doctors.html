@@ -22,32 +22,37 @@
           </div>
           <br>
           <div class="">
-            <table class="table is-fullwidth is-striped is-hoverable ">
-              <thead>
-                <tr>
-                  <th>username</th>
-                  <th>email</th>
-                  <th>phone number</th>
-                  <th>created</th>
-                  <th>last login</th>
 
-                </tr>
-              </thead>
-              {% for doctor in smtg %}
+            <table class="table table-striped table-hover tt">
+            <thead class="thead-dark ">
               <tr>
-                <td>{{doctor.username}}</td>
-                <td>{{doctor.email}}</td>
-                <td>{{doctor.phone_num}}</td>
-                <td>{{doctor.get_created_time}}</td>
-                <td>{{doctor.get_last_login}}</td>
+                <th scope="col">username</th>
+                <th scope="col">phone</th>
+                <th scope="col">email</th>
+                <th scope="col">created</th>
+                <th scope="col">last login</th>
+                <th scope="col">delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for x in smtg %}
+              <tr>
+                <td>{{x.username}}</td>
+                <td>{{x.phone_num}}</td>
+                <td>{{x.email}}</td>
+                <th scope="col">{{x.get_created_time}}</th>
+                <th scope="col">{{x.get_last_login}}</th>
                 <td>
-                  <a href="" class="button is-black is-small">delete</a>
+                  <a  href="" class="button is-black is-small tt">delete</a>
                 </td>
 
               </tr>
-              {% endfor %}
+              {% endfor%}
 
-            </table>
+            </tbody>
+          </table>
+
+
           </div>
 
           <div class="container">

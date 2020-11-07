@@ -19,31 +19,34 @@
       YOUR REQUESTS
     </a>
   </div>
-
-  <table class="table is-fullwidth  is-hoverable has-background-grey-light">
-    <thead>
-      <tr>
-        <th>username</th>
-        <th>phone</th>
-        <th>email</th>
-        <th>delete</th>
-      </tr>
-    </thead>
+  <table class="table tt">
+  <thead class="thead-dark ">
+    <tr>
+      <th scope="col">username</th>
+      <th scope="col">phone</th>
+      <th scope="col">email</th>
+      <th scope="col">delete</th>
+      <th scope="col">comfirmation</th>
+    </tr>
+  </thead>
+  <tbody>
     {% for x in smtg %}
     <tr>
       <td>{{x.username}}</td>
       <td>{{x.phone_num}}</td>
       <td>{{x.email}}</td>
       <td>
-        <a href="" class="button is-black is-small">delete</a>
+        <a  href="" class="button is-black is-small tt">delete</a>
       </td>
       <td>
-        <a href="{% url 'get_adminn_pk' x.pk %}" class="button is-black">send him email</a>
+        <a  href="{% url 'get_adminn_pk' x.pk %}" class="button  tt is-black">send him email</a>
       </td>
     </tr>
     {% endfor%}
 
+  </tbody>
+</table>
 
-  </table>
+
 </div>
 {% endblock %}
