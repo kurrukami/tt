@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from .forms import *
+
 from ze.shit import *
+from ze.decorators import *
+
 from .models import *
 from django import forms
 from django.contrib import messages
@@ -13,6 +16,7 @@ class all_rv(View):
     template_name = 'all_rv.html'
     context = {}
 
+    @method_decorator(only_doctors)
     def get(self, request):
         today = datetime.datetime.now()
         rvs = rv.objects.filter(rd_time__day=today.day)
@@ -131,7 +135,7 @@ class rv_form_view(View):
         else:
             return None
 
-
+    
     def get(self, request, key):
         context = {
                  'key':key,
