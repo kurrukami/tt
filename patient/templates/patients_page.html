@@ -70,10 +70,10 @@
           <td>{{patient.phone_num}}</td>
           <td>{{patient.cin}}</td>
           <td>{{patient.genre_visite}}</td>
-          <td>{{patient.montant_a_payer}}</td>
-          <td>{{patient.montant_paye}}</td>
-          <td>{{patient.montant_reste}}</td>
-          <td>{{patient.date_debut}}</td>
+          <td>{{patient.cost_dh}}</td>
+          <td>{{patient.payed_dh}}</td>
+          <td>{{patient.rest_dh}}</td>
+          <td>{{patient.get_date_debut}}</td>
           <td>
             <a href="{% url 'update_patient' patient.pk %}" class="button is-dark is-small">update</a>
           </td>

@@ -45,6 +45,18 @@ class patient(models.Model):
         return f'{montant} dh'
 
 
+
+    def cost_dh(self):
+        return self.dh_format(self.montant_a_payer)
+
+    def payed_dh(self):
+        return self.dh_format(self.montant_paye)
+
+    def rest_dh(self):
+        return self.dh_format(self.montant_reste())
+
+
+
     def montant_reste(self):
         montant = self.montant_a_payer
         paye = self.montant_paye

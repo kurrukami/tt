@@ -14,11 +14,13 @@
 
 {% block 'content' %}
 <div class="hero">
-  <div class="field p-3">
-    <a class="button is-white" type="" href=" {% url 'admin_view' 'doctors'  %} ">
-      YOUR REQUESTS
+  <div class="field p-3 column is-offset-9">
+    <a class="button is-medium is-white" type="" href=" {% url 'admin_view' 'doctors'  %} ">
+      all doctors
     </a>
   </div>
+    <h1 class="title">YOUR REQUESTS</h1>
+
   <table class="table tt">
   <thead class="thead-dark ">
     <tr>
