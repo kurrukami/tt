@@ -18,10 +18,13 @@ class patients_gestion_page(View):
     qs = []
     patients = patient.objects.all()
 
-    @method_decorator(decorators)
+    @method_decorator(only_doctors)
     def get(self, request):
 
+
         self.patients = patient.objects.all().filter(adminn=request.user)
+        from_me_to_me(patients=self.patients)
+        from_me_to_me(p=patient.objects.all().filter(adminn=request.user))
         context = {
                  'patients' : self.patients
                 }
@@ -52,10 +55,10 @@ class patients_gestion_page(View):
         return self.qs
 
     def search_by_year(self, search_query):
-        self.qs =self.patients.filter(date_debut__icontains=search_query)
+        self.qs = self.patients.filter(date_debut__icontains=search_query)
         return self.qs
 
-    @method_decorator(decorators)
+    @method_decorator(only_doctors)
     def delete_patient_fake(request, pk):
         try:
             p = patient.objects.get(pk=pk)
@@ -98,7 +101,7 @@ def update_patient2(request, pk):
     }
     return render(request, 'patient_form_view.html', context)
 
-
+@only_doctors
 def delete_patient_real(request, pk):
     try:
         p = patient.objects.get(pk=pk)
@@ -109,7 +112,7 @@ def delete_patient_real(request, pk):
         messages.error(request, msg)
 
     except patient.DoesNotExist :
-        msg = 'patient does not find'
+        msg = 'patient does not found'
         from_me_to_me(msg=msg)
 
     return redirect("all_patients")
@@ -120,6 +123,8 @@ class add_new_patient(View):
 
     template_name = 'patient_form_view.html'
     form = patient_form
+
+
 
     @method_decorator(decorators)
     def get(self, request):
@@ -163,8 +168,9 @@ class add_new_patient(View):
                 messages.error(request, msg)
                 return redirect("all_patients")
         else:
+            self.form = self.form(request.POST)
             from_me_to_me(err=f.errors)
             msg = 'form not valid'
             from_me_to_me(msg=msg)
             messages.error(request, f.errors)
-            return redirect("add_new_patient")
+            return self.get(request)
