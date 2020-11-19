@@ -19,6 +19,28 @@ from ze.decorators import *
 
 decorators =[only_superusers]
 
+@only_superusers
+def delete_doctor_real(request, pk):
+    try:
+        d = doctor.objects.get(pk=pk)
+        from_me_to_me(doctor=request.user)
+        if d.is_superuser:
+            msg = f'{d.username} is superuser, u r a traitor'
+            from_me_to_me(msg=msg)
+            messages.error(request, msg)
+            return redirect("admin_view", "doctors")
+
+        d.delete()
+        msg = f'{d.username} was deleted successfully'
+        from_me_to_me(msg=msg)
+        messages.error(request, msg)
+
+    except doctor.DoesNotExist :
+        msg = 'doctor does not found'
+        from_me_to_me(msg=msg)
+
+    return redirect("admin_view", "doctors")
+
 
 class view(View):
     template_name = 'base.html'
@@ -76,8 +98,6 @@ def get_adminn_pk(request, pk):
 from django.core.mail import send_mail
 import random, math
 class send_email:
-
-
 
     def __init__(self, pk):
 
@@ -157,6 +177,7 @@ class admin_view(View):
 
     @method_decorator(decorators)
     def get(self, request, key):
+        #from_me_to_me(doctor=request.user.is_superuser)
         doctors = doctor.objects.all()
         doctors_infos = adminn_infos.objects.all()
         smtg = {
@@ -229,7 +250,7 @@ def send_infos_view(request):
     #from_me_to_me(form=form)
     if request.method == 'POST':
         f = form(request.POST)
-        from_me_to_me(data=f)
+        #from_me_to_me(data=f)
         if f.is_valid():
             cd = f.cleaned_data
             from_me_to_me(cleaned_data=cd)
@@ -243,7 +264,8 @@ def send_infos_view(request):
             messages.success(request, msg)
             return redirect("send_infos")
         else:
-            msg = 'smtg went wrong'
+            from_me_to_me(err=f.errors)
+            msg = f.errors
             messages.error(request, msg)
             return redirect("send_infos")
     return render(request, "send_infos.html", {'form' : form })

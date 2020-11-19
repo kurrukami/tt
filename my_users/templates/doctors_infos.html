@@ -27,7 +27,6 @@
       <th scope="col">username</th>
       <th scope="col">phone</th>
       <th scope="col">email</th>
-      <th scope="col">delete</th>
       <th scope="col">comfirmation</th>
     </tr>
   </thead>
@@ -37,9 +36,6 @@
       <td>{{x.username}}</td>
       <td>{{x.phone_num}}</td>
       <td>{{x.email}}</td>
-      <td>
-        <a  href="" class="button is-black is-small tt">delete</a>
-      </td>
       <td>
         <a  href="{% url 'get_adminn_pk' x.pk %}" class="button  tt is-black">send him email</a>
       </td>

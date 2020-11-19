@@ -43,7 +43,7 @@
                 <th scope="col">{{x.get_created_time}}</th>
                 <th scope="col">{{x.get_last_login}}</th>
                 <td>
-                  <a  href="" class="button is-black is-small tt">delete</a>
+                  <a  href="{% url 'delete_doctor_real' x.pk %}" class="button is-black is-small tt">delete</a>
                 </td>
 
               </tr>
