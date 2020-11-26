@@ -127,7 +127,10 @@ class send_email:
 
 
     def generate_msg(self):
-        self.msg = f'we are glad u join our large community  {self.username}.\nhere is ur password : {self.password}.'
+        msg1 = f'we are glad u join our large community  {self.username}.\n'
+        msg2 = f'here is ur password : {self.password}.\n\n '
+        msg3 =  'here is our website https://ze-dunti.herokuapp.com/ and thank u for choosing us'
+        self.msg = msg1+msg2+msg3
         from_me_to_me(msg=self.msg)
         return self.msg
 

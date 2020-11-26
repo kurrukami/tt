@@ -45,7 +45,11 @@ class rv_view(View):
 
 
 
+
+
+
     def get(self, request, key):
+
         from_me_to_me(key1=key)
         rv = rv_form_view()
         from_me_to_me(context=self.context)
@@ -135,11 +139,13 @@ class rv_form_view(View):
         else:
             return None
 
-    
+
     def get(self, request, key):
         context = {
                  'key':key,
         }
+        doctors = doctor.objects.all()
+        context.setdefault("doctors", doctors)
         form = self.get_rv_form(key)
         if key == 'date_ap':
             form = form({
